@@ -3,7 +3,7 @@ const fs = require("fs");
 function cleanIt(uri){
     let wordList = [];
     let cleanList = [];
-    fs.readStream(uri,'utf8',(data,err)=>{
+    fs.readFile(uri,'utf8',(data,err)=>{
         if(err)
         {
             console.log(err);
