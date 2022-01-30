@@ -3,35 +3,28 @@ const fs = require("fs");
 function cleanIt(uri){
     let wordList = [];
     let cleanList = [];
-    fs.readFile(uri,'utf8',(data,err)=>{
+    fs.readFile(uri,'utf8',(err,data)=>{
         if(err)
         {
             console.log(err);
             return;
         }
-        wordList = JSON.parse(data);
-        wordList = Array.sort(wordList);
-        wordList.forEach(word => {
-            if(word[0] !== word[0].toUpperCase())
+        wordList = data.split('\n');
+        cleanList.push('\n');
+        cleanList.push(wordList[0]);
+        for(i=1; i<wordList.length; i++)
+        {
+            if(wordList[i] != wordList[i-1])
             {
-           
-                let exists = false;
-                for(let i=0; i<cleanList.length; i++)
-                {
-                    if(cleanList[i] == word)
-                    {
-                        exists = true;
-                    }
-                }
-                if(!exists)
-                {
-                    cleanList.push(word);
-                }
+                cleanList.push(wordList[i])
             }
-        });
-        fs.appendFile(uri,JSON.stringify(cleanList),err=>console.log(err));
-    })
+        }
+        cleanList=cleanList.join("\n")
+        fs.appendFile(uri,cleanList,err=>console.log(err));
+    });
+    
 };
+  
 
 cleanIt("fives.json");
 cleanIt("sixes.json");
