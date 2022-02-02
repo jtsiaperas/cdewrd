@@ -12,6 +12,10 @@ const UserSchema = new Schema({
     words: [{
         type: Schema.Types.ObjectId,
         ref: "Word"
+    }],
+    guesses: [{ //User links to guesses, guesses link to word
+        type: Schema.Types.ObjectId,
+        ref: "Guess"
     }]
 });
 
